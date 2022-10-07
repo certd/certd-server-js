@@ -1,10 +1,8 @@
-import { EntityModel } from '@midwayjs/orm';
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 /**
  * dns提供者
  */
-@EntityModel('cd_dns_resolver')
 @Entity('cd_dns_resolver')
 export class DnsResolverEntity {
   @PrimaryGeneratedColumn()

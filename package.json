@@ -20,6 +20,11 @@
     "mig": "typeorm migration:create -n name"
   },
   "dependencies": {
+    "@certd/api": "^0.2.1",
+    "@certd/executor": "^0.2.2",
+    "@certd/plugin-aliyun": "^0.2.2",
+    "@certd/plugin-host": "^0.2.1",
+    "@certd/plugin-tencent": "^0.2.2",
     "midway-flyway-js": "^3.0.0",
     "@koa/cors": "^3.1.0",
     "@midwayjs/bootstrap": "^3.0.0",
@@ -40,7 +45,6 @@
     "lodash": "^4.17.21",
     "log4js": "^6.3.0",
     "md5": "^2.3.0",
-    "midway-flyway-js": "^1.1.7",
     "sqlite3": "^5.0.2",
     "svg-captcha": "^1.4.0",
     "@midwayjs/validate": "^3.0.0",

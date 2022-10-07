@@ -3,6 +3,7 @@ import {FlywayHistory} from "midway-flyway-js/dist/entity";
 
 
 import { MidwayConfig } from '@midwayjs/core';
+import {UserEntity} from "../modules/authority/entity/user";
 
 export default {
   // use for cookie sign key, should change to your own and keep security
@@ -32,7 +33,7 @@ export default {
         logging: true,
 
         // 配置实体模型 或者 entities: '/entity',
-        entities: ['./modules/authority/entity/*',FlywayHistory],
+        entities: ['/modules/authority/entity/*','/modules/certd/entity/*',FlywayHistory,UserEntity],
       }
     }
   },

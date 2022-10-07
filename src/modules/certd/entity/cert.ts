@@ -1,4 +1,3 @@
-import { EntityModel } from '@midwayjs/orm';
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 /**
@@ -18,7 +17,6 @@ import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
       emailAddress: 'xiaojunnuo@qq.com'
     }
  */
-@EntityModel('cd_cert')
 @Entity('cd_cert')
 export class CertEntity {
   @PrimaryGeneratedColumn()

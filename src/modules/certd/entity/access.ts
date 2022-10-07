@@ -1,10 +1,8 @@
-import { EntityModel } from '@midwayjs/orm';
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 /**
  * 授权配置
  */
-@EntityModel('cd_access')
 @Entity('cd_access')
 export class AccessEntity {
   @PrimaryGeneratedColumn()

@@ -1,10 +1,8 @@
-import { EntityModel } from '@midwayjs/orm';
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 /**
  * 证书
  */
-@EntityModel('cd_task')
 @Entity('cd_task')
 export class TaskEntity {
   @PrimaryGeneratedColumn()
