@@ -15,7 +15,7 @@ import { TaskHistoryService } from '../service/task-history-service';
  */
 @Provide()
 @Controller('/api/certd/task-history')
-export class TaskHistoryController extends CrudController<TaskHistoryService> {
+export class TaskHistoryController extends CrudController {
   @Inject()
   service: TaskHistoryService;
 

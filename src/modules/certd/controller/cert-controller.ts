@@ -9,13 +9,14 @@ import {
 } from '@midwayjs/decorator';
 import { CrudController } from '../../../basic/crud-controller';
 import { CertService } from '../service/cert-service';
+import { CertEntity } from '../entity/cert';
 
 /**
  * 证书
  */
 @Provide()
 @Controller('/api/certd/cert')
-export class CertController extends CrudController<CertService> {
+export class CertController extends CrudController {
   @Inject()
   service: CertService;
 
@@ -29,7 +30,8 @@ export class CertController extends CrudController<CertService> {
   }
 
   @Post('/add')
-  async add(@Body(ALL) bean) {
+  async add(@Body(ALL) bean: CertEntity) {
+    bean.userId = this.ctx.user.id;
     return super.add(bean);
   }
 
@@ -38,7 +40,11 @@ export class CertController extends CrudController<CertService> {
     return super.update(bean);
   }
   @Post('/delete')
-  async delete(@Query() id) {
+  async delete(@Query('id') id) {
+    const bean: CertEntity = await this.service.info(id);
+    if (bean == null || bean.userId !== this.ctx.user.id) {
+      return;
+    }
     return super.delete(id);
   }
 }

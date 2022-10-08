@@ -8,7 +8,7 @@ import { UserRoleEntity } from '../entity/user-role';
  * 用户->角色
  */
 @Provide()
-export class UserRoleService extends BaseService {
+export class UserRoleService extends BaseService<UserRoleEntity> {
   @InjectEntityModel(UserRoleEntity)
   repository: Repository<UserRoleEntity>;
 

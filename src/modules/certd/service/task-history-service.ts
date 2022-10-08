@@ -8,7 +8,7 @@ import { TaskHistoryEntity } from '../entity/task-history';
  * 任务执行历史记录
  */
 @Provide()
-export class TaskHistoryService extends BaseService {
+export class TaskHistoryService extends BaseService<TaskHistoryEntity> {
   @InjectEntityModel(TaskHistoryEntity)
   repository: Repository<TaskHistoryEntity>;
 

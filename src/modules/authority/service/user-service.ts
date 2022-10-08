@@ -15,7 +15,7 @@ import { UserRoleService } from './user-role-service';
  * 系统用户
  */
 @Provide()
-export class UserService extends BaseService {
+export class UserService extends BaseService<UserEntity> {
   @InjectEntityModel(UserEntity)
   repository: Repository<UserEntity>;
   @Inject()
@@ -36,7 +36,7 @@ export class UserService extends BaseService {
     const info = await this.repository.findOne({
       where: {
         id: this.ctx.user.id,
-      }
+      },
     });
     delete info.password;
     return info;
@@ -48,9 +48,9 @@ export class UserService extends BaseService {
    */
   async add(param) {
     const exists = await this.repository.findOne({
-      where:{
+      where: {
         username: param.username,
-      }
+      },
     });
     if (!_.isEmpty(exists)) {
       throw new CommonException('用户名已经存在');
@@ -74,7 +74,7 @@ export class UserService extends BaseService {
       throw new CommonException('id不能为空');
     }
     const userInfo = await this.repository.findOne({
-      where:{ id: param.id }
+      where: { id: param.id },
     });
     if (!userInfo) {
       throw new CommonException('用户不存在');
@@ -92,7 +92,7 @@ export class UserService extends BaseService {
 
   async findOne(param) {
     return this.repository.findOne({
-      where:param
+      where: param,
     });
   }
 

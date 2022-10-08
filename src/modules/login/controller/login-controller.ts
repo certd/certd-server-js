@@ -28,4 +28,3 @@ export class LoginController extends BaseController {
   @Post('/logout')
   public logout() {}
 }
-

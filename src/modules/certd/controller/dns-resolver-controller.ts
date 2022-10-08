@@ -15,7 +15,7 @@ import { DnsResolverService } from '../service/dns-resolver-service';
  */
 @Provide()
 @Controller('/api/certd/dns-resolver')
-export class DnsResolverController extends CrudController<DnsResolverService> {
+export class DnsResolverController extends CrudController {
   @Inject()
   service: DnsResolverService;
 

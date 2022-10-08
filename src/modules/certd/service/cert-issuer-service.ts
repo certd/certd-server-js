@@ -8,7 +8,7 @@ import { CertIssuerEntity } from '../entity/cert-issuer';
  * cert provider
  */
 @Provide()
-export class CertIssuerService extends BaseService {
+export class CertIssuerService extends BaseService<CertIssuerEntity> {
   @InjectEntityModel(CertIssuerEntity)
   repository: Repository<CertIssuerEntity>;
 

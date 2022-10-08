@@ -8,7 +8,7 @@ import { RolePermissionEntity } from '../entity/role-permission';
  * 角色->权限
  */
 @Provide()
-export class RolePermissionService extends BaseService {
+export class RolePermissionService extends BaseService<RolePermissionEntity> {
   @InjectEntityModel(RolePermissionEntity)
   repository: Repository<RolePermissionEntity>;
 

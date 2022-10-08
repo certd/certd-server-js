@@ -15,7 +15,7 @@ import { TaskService } from '../service/task-service';
  */
 @Provide()
 @Controller('/api/certd/task')
-export class TaskController extends CrudController<TaskService> {
+export class TaskController extends CrudController {
   @Inject()
   service: TaskService;
 

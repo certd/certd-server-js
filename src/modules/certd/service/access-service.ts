@@ -8,7 +8,7 @@ import { AccessEntity } from '../entity/access';
  * 授权
  */
 @Provide()
-export class AccessService extends BaseService {
+export class AccessService extends BaseService<AccessEntity> {
   @InjectEntityModel(AccessEntity)
   repository: Repository<AccessEntity>;
 

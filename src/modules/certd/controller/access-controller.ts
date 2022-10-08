@@ -16,7 +16,7 @@ import * as _ from 'lodash';
  */
 @Provide()
 @Controller('/api/certd/access')
-export class AccessController extends CrudController<AccessService> {
+export class AccessController extends CrudController {
   @Inject()
   service: AccessService;
 

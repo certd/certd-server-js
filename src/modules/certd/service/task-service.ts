@@ -8,7 +8,7 @@ import { TaskEntity } from '../entity/task';
  * 授权
  */
 @Provide()
-export class TaskService extends BaseService {
+export class TaskService extends BaseService<TaskEntity> {
   @InjectEntityModel(TaskEntity)
   repository: Repository<TaskEntity>;
 

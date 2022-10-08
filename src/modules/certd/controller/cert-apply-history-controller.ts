@@ -15,7 +15,7 @@ import { CertApplyHistoryService } from '../service/cert-apply-history-service';
  */
 @Provide()
 @Controller('/api/certd/cert-apply-history')
-export class CertApplyHistoryController extends CrudController<CertApplyHistoryService> {
+export class CertApplyHistoryController extends CrudController {
   @Inject()
   service: CertApplyHistoryService;
 

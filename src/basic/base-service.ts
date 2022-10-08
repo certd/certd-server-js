@@ -5,7 +5,7 @@ import { Context } from '@midwayjs/koa';
 /**
  * 服务基类
  */
-export abstract class BaseService {
+export abstract class BaseService<T> {
   @Inject()
   ctx: Context;
 
@@ -16,11 +16,11 @@ export abstract class BaseService {
    * @param id ID
    * @param infoIgnoreProperty 忽略返回属性
    */
-  async info(id, infoIgnoreProperty?) {
+  async info(id, infoIgnoreProperty?): Promise<T | null> {
     if (!id) {
       throw new ValidateException('id不能为空');
     }
-    const info = await this.getRepository().findOne({ where:{id} });
+    const info = await this.getRepository().findOne({ where: { id } });
     if (info && infoIgnoreProperty) {
       for (const property of infoIgnoreProperty) {
         delete info[property];

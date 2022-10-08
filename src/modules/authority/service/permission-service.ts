@@ -8,7 +8,7 @@ import { PermissionEntity } from '../entity/permission';
  * 权限资源
  */
 @Provide()
-export class PermissionService extends BaseService {
+export class PermissionService extends BaseService<PermissionEntity> {
   @InjectEntityModel(PermissionEntity)
   repository: Repository<PermissionEntity>;
 

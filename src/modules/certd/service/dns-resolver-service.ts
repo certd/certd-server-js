@@ -8,7 +8,7 @@ import { DnsResolverEntity } from '../entity/dns-resolver';
  * dns提供者
  */
 @Provide()
-export class DnsResolverService extends BaseService {
+export class DnsResolverService extends BaseService<DnsResolverEntity> {
   @InjectEntityModel(DnsResolverEntity)
   repository: Repository<DnsResolverEntity>;
 
