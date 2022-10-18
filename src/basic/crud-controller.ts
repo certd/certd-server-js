@@ -18,6 +18,15 @@ export abstract class CrudController extends BaseController {
     return this.ok(pageRet);
   }
 
+  @Post('/list')
+  async list(
+    @Body(ALL)
+    body
+  ) {
+    const listRet = await this.getService().list(body, null, null);
+    return this.ok(listRet);
+  }
+
   @Post('/add')
   async add(
     @Body(ALL)
@@ -32,7 +41,7 @@ export abstract class CrudController extends BaseController {
     @Query('id')
     id
   ) {
-    const bean = await this.getService().get(id);
+    const bean = await this.getService().info(id);
     return this.ok(bean);
   }
 

@@ -29,20 +29,37 @@ export class AccessController extends CrudController {
 
   @Post('/page')
   async page(@Body(ALL) body) {
+    body.query = body.query ?? {};
+    body.query.userId = this.ctx.user.id;
     return super.page(body);
+  }
+
+  @Post('/list')
+  async list(@Body(ALL) body) {
+    body.userId = this.ctx.user.id;
+    return super.list(body);
   }
 
   @Post('/add')
   async add(@Body(ALL) bean) {
+    bean.userId = this.ctx.user.id;
     return super.add(bean);
   }
 
   @Post('/update')
   async update(@Body(ALL) bean) {
+    await this.service.checkUserId(bean.id, this.ctx.user.id);
     return super.update(bean);
   }
+  @Post('/info')
+  async info(@Query('id') id) {
+    await this.service.checkUserId(id, this.ctx.user.id);
+    return super.info(id);
+  }
+
   @Post('/delete')
-  async delete(@Query() id) {
+  async delete(@Query('id') id) {
+    await this.service.checkUserId(id, this.ctx.user.id);
     return super.delete(id);
   }
   @Post('/providers')
@@ -53,5 +70,11 @@ export class AccessController extends CrudController {
       list.push(item.define);
     });
     return this.ok(list);
+  }
+
+  @Post('/define')
+  async define(@Query('type') type) {
+    const provider = this.accessProviderService.getByType(type);
+    return this.ok(provider.define);
   }
 }

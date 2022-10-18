@@ -10,12 +10,14 @@ import * as cache from '@midwayjs/cache';
 import * as cors from '@koa/cors';
 import { join } from 'path';
 import * as flyway from 'midway-flyway-js';
-import {ReportMiddleware} from "./middleware/report";
-import {GlobalExceptionMiddleware} from "./middleware/global-exception";
-import {PreviewMiddleware} from "./middleware/preview";
-import {AuthorityMiddleware} from "./middleware/authority";
+import { ReportMiddleware } from './middleware/report';
+import { GlobalExceptionMiddleware } from './middleware/global-exception';
+import { PreviewMiddleware } from './middleware/preview';
+import { AuthorityMiddleware } from './middleware/authority';
+
+import './modules/certd/plugin/install';
 @Configuration({
-  imports: [koa, orm, cache, flyway,validateComp],
+  imports: [koa, orm, cache, flyway, validateComp],
   importConfigs: [
     {
       default: defaultConfig,
@@ -45,15 +47,15 @@ export class ContainerLifeCycle {
     //请求日志打印
 
     this.app.useMiddleware([
-
       ReportMiddleware,
       //统一异常处理
       GlobalExceptionMiddleware,
       //预览模式限制修改id<1000的数据
       PreviewMiddleware,
       //授权处理
-      AuthorityMiddleware
-    ])
+      AuthorityMiddleware,
+    ]);
+
+    //加载插件
   }
 }
-

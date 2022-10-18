@@ -2,6 +2,8 @@ import { Inject } from '@midwayjs/decorator';
 import { ValidateException } from './exception/validation-exception';
 import * as _ from 'lodash';
 import { Context } from '@midwayjs/koa';
+import { PermissionException } from './exception/permission-exception';
+
 /**
  * 服务基类
  */
@@ -144,5 +146,53 @@ export abstract class BaseService<T> {
       offset: page.offset,
       limit: page.limit,
     };
+  }
+
+  /**
+   * 分页查询
+   * @param query 查询条件 bean
+   * @param order
+   * @param buildQuery
+   */
+  async list(query, order, buildQuery) {
+    const qb = this.getRepository().createQueryBuilder('main');
+    if (order && order.prop) {
+      qb.orderBy('main.' + order.prop, order.asc ? 'ASC' : 'DESC');
+    } else {
+      qb.orderBy('id', 'DESC');
+    }
+    //根据bean query
+    if (query) {
+      let whereSql = '';
+      let index = 0;
+      _.forEach(query, (value, key) => {
+        if (!value) {
+          return;
+        }
+        if (index !== 0) {
+          whereSql += ' and ';
+        }
+        whereSql += ` main.${key} = :${key} `;
+        index++;
+      });
+      if (index > 0) {
+        qb.where(whereSql, query);
+      }
+    }
+    //自定义query
+    if (buildQuery) {
+      buildQuery(qb);
+    }
+    return await qb.getMany();
+  }
+
+  async checkUserId(id = 0, userId, userKey = 'userId') {
+    const count = await this.getRepository().count({
+      where: { id, [userKey]: userId },
+    });
+    if (count > 0) {
+      return;
+    }
+    throw new PermissionException('权限不足');
   }
 }

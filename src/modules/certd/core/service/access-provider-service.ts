@@ -1,11 +1,12 @@
 import { Provide } from '@midwayjs/decorator';
-import { CertdPluginContext } from '../api';
-
+import { accessProviderRegistry } from '@certd/api';
 @Provide()
 export class AccessProviderService {
-  context = CertdPluginContext;
   getAccessProviders() {
-    const register = this.context.getRegistry('access');
-    return register.collection;
+    return accessProviderRegistry.collection;
+  }
+
+  getByType(type) {
+    return accessProviderRegistry.get(type);
   }
 }

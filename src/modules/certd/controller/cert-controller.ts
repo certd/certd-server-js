@@ -26,6 +26,7 @@ export class CertController extends CrudController {
 
   @Post('/page')
   async page(@Body(ALL) body) {
+    body.query.userId = this.ctx.user.id;
     return super.page(body);
   }
 
@@ -37,14 +38,12 @@ export class CertController extends CrudController {
 
   @Post('/update')
   async update(@Body(ALL) bean) {
+    await this.service.checkUserId(bean.id, this.ctx.user.id);
     return super.update(bean);
   }
   @Post('/delete')
   async delete(@Query('id') id) {
-    const bean: CertEntity = await this.service.info(id);
-    if (bean == null || bean.userId !== this.ctx.user.id) {
-      return;
-    }
+    await this.service.checkUserId(id, this.ctx.user.id);
     return super.delete(id);
   }
 }
