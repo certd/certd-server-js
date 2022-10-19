@@ -75,6 +75,6 @@ export class AccessController extends CrudController {
   @Post('/define')
   async define(@Query('type') type) {
     const provider = this.accessProviderService.getByType(type);
-    return this.ok(provider.define);
+    return this.ok(provider.define());
   }
 }
