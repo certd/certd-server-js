@@ -11,6 +11,8 @@ import { CrudController } from '../../../basic/crud-controller';
 import { AccessService } from '../service/access-service';
 import { AccessProviderService } from '../core/service/access-provider-service';
 import * as _ from 'lodash';
+import { AccessTypeEnum } from '../enums/access-type-enum';
+import { DnsProviderTypeEnum } from '../enums/dns-provider-type-enum';
 /**
  * 授权
  */
@@ -76,5 +78,15 @@ export class AccessController extends CrudController {
   async define(@Query('type') type) {
     const provider = this.accessProviderService.getByType(type);
     return this.ok(provider.define());
+  }
+
+  @Post('/dnsProviderTypeDict')
+  async getDnsProviderTypeDict() {
+    return this.ok(DnsProviderTypeEnum.names());
+  }
+
+  @Post('/accessTypeDict')
+  async getAccessTypeDict() {
+    return this.ok(AccessTypeEnum.names());
   }
 }

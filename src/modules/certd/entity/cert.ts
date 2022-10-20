@@ -44,23 +44,23 @@ export class CertEntity {
     name: 'challenge_type',
     comment: '校验挑战类型',
     length: 100,
-    nullable: true,
+    nullable: false,
   })
   challengeType: string;
 
   @Column({
-    name: 'challenge_access_id',
-    comment: '校验挑战授权',
-    nullable: true,
+    name: 'challenge_dns_type',
+    comment: 'DNS提供商类型',
+    nullable: false,
   })
-  challengeAccessId: number;
+  challengeDnsType: string;
 
   @Column({
-    name: 'dns_resolver_id',
-    comment: 'dns解析',
-    nullable: true,
+    name: 'challenge_access_id',
+    comment: '校验挑战授权',
+    nullable: false,
   })
-  dnsResolverId: number;
+  challengeAccessId: number;
 
   @Column({ comment: '国家', length: 100, nullable: true })
   country: string;

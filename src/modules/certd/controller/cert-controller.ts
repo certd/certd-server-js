@@ -46,4 +46,11 @@ export class CertController extends CrudController {
     await this.service.checkUserId(id, this.ctx.user.id);
     return super.delete(id);
   }
+
+  @Post('/detail')
+  async info(@Query('id') id) {
+    await this.service.checkUserId(id, this.ctx.user.id);
+    const detail = await this.service.detail(id);
+    return this.ok(detail);
+  }
 }
