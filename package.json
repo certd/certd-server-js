@@ -20,6 +20,7 @@
     "mig": "typeorm migration:create -n name"
   },
   "dependencies": {
+    "@certd/pipeline": "^0.3.0",
     "@certd/api": "^0.3.0",
     "@certd/executor": "^0.3.0",
     "@certd/plugin-aliyun": "^0.3.0",

@@ -18,7 +18,7 @@ export class PipelineEntity {
   remark: string;
 
   @Column({ comment: '状态', length: 100, nullable: true })
-  status;
+  status: string;
 
   @Column({
     name: 'last_history_id',

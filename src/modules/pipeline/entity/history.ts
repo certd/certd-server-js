@@ -9,7 +9,7 @@ export class HistoryEntity {
   userId: number;
 
   @Column({ name: 'title', comment: '标题' })
-  type: number;
+  title: number;
 
   @Column({ name: 'pipeline_id', comment: '流水线' })
   pipelineId: number;
@@ -18,7 +18,7 @@ export class HistoryEntity {
   content: string;
 
   @Column({ comment: '状态', length: 100, nullable: true })
-  status;
+  status: string;
 
   @Column({
     name: 'end_time',

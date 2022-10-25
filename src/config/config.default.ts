@@ -35,6 +35,7 @@ export default {
         entities: [
           '/modules/authority/entity/*',
           '/modules/certd/entity/*',
+          '/modules/pipeline/entity/*',
           FlywayHistory,
           UserEntity,
         ],
