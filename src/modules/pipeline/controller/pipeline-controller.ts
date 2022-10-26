@@ -15,7 +15,7 @@ import { PipelineEntity } from '../entity/pipeline';
  * 证书
  */
 @Provide()
-@Controller('/api/certd/pipeline')
+@Controller('/api/pipeline')
 export class PipelineController extends CrudController {
   @Inject()
   service: PipelineService;

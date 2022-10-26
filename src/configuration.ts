@@ -4,17 +4,15 @@ import * as previewConfig from './config/config.preview';
 import * as defaultConfig from './config/config.default';
 import { Configuration, App } from '@midwayjs/decorator';
 import * as koa from '@midwayjs/koa';
-import * as bodyParser from 'koa-bodyparser';
 import * as orm from '@midwayjs/typeorm';
 import * as cache from '@midwayjs/cache';
-import * as cors from '@koa/cors';
+import cors from '@koa/cors';
 import { join } from 'path';
 import * as flyway from 'midway-flyway-js';
 import { ReportMiddleware } from './middleware/report';
 import { GlobalExceptionMiddleware } from './middleware/global-exception';
 import { PreviewMiddleware } from './middleware/preview';
 import { AuthorityMiddleware } from './middleware/authority';
-
 import './modules/certd/plugin/install';
 @Configuration({
   imports: [koa, orm, cache, flyway, validateComp],
@@ -43,7 +41,7 @@ export class ContainerLifeCycle {
       })
     );
     // bodyparser options see https://github.com/koajs/bodyparser
-    this.app.use(bodyParser());
+    //this.app.use(bodyParser());
     //请求日志打印
 
     this.app.useMiddleware([

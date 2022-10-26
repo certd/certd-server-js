@@ -7,13 +7,13 @@ import {
   Query,
 } from '@midwayjs/decorator';
 import { BaseController } from '../../../basic/base-controller';
-import { PluginService } from '../core/service/plugin-service';
+import { PluginService } from '../service/plugin-service';
 
 /**
  * 插件
  */
 @Provide()
-@Controller('/api/certd/plugin')
+@Controller('/api/plugin')
 export class PluginController extends BaseController {
   @Inject()
   service: PluginService;
