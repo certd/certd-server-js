@@ -41,6 +41,17 @@ export class PipelineController extends CrudController {
     await this.service.checkUserId(bean.id, this.ctx.user.id);
     return super.update(bean);
   }
+
+  @Post('/save')
+  async save(@Body(ALL) bean: PipelineEntity) {
+    bean.userId = this.ctx.user.id;
+    if (bean.id > 0) {
+      await this.service.checkUserId(bean.id, this.ctx.user.id);
+    }
+    await this.service.save(bean);
+    return this.ok(bean.id);
+  }
+
   @Post('/delete')
   async delete(@Query('id') id) {
     await this.service.checkUserId(id, this.ctx.user.id);
@@ -48,9 +59,16 @@ export class PipelineController extends CrudController {
   }
 
   @Post('/detail')
-  async info(@Query('id') id) {
+  async detail(@Query('id') id) {
     await this.service.checkUserId(id, this.ctx.user.id);
     const detail = await this.service.detail(id);
     return this.ok(detail);
+  }
+
+  @Post('/run')
+  async run(@Query('id') id) {
+    await this.service.checkUserId(id, this.ctx.user.id);
+    const history = await this.service.run(id);
+    return this.ok(history.id);
   }
 }
