@@ -10,6 +10,7 @@ import { DbStorage } from './db-storage';
 import { StorageService } from './storage-service';
 import { Cron } from '../../../plugins/cron/cron';
 import { HistoryService } from './history-service';
+import { HistoryEntity } from '../entity/history';
 
 /**
  * 证书申请
@@ -52,19 +53,22 @@ export class PipelineService extends BaseService<PipelineEntity> {
     this.cron.register({
       name: `pipeline.${id}.trigger.once`,
       cron: null,
-      async job() {},
+      job: async () => {
+        await this.run(id);
+      },
     });
   }
 
   async run(id) {
     const entity: PipelineEntity = await this.info(id);
     const pipeline = JSON.parse(entity.content);
-    function onChanged(history: RunHistory) {
-      console.log('changed:');
-    }
+    const onChanged = async (history: RunHistory) => {
+      //保存执行历史
+      await this.saveHistory(history);
+    };
 
     const userId = entity.userId;
-    const historyId = this.historyService.start(entity);
+    const historyId = await this.historyService.start(entity);
 
     const executor = new Executor({
       userId,
@@ -75,5 +79,19 @@ export class PipelineService extends BaseService<PipelineEntity> {
     });
 
     await executor.run(historyId);
+  }
+
+  private async saveHistory(history: RunHistory) {
+    const entity: HistoryEntity = new HistoryEntity();
+    entity.id = history.id;
+    const results = {};
+    const logs = {};
+    for (const id in history.status) {
+      results[id] = history.status[id].result;
+      logs[id] = history.status[id].logs;
+    }
+    entity.results = JSON.stringify(results);
+    entity.logs = JSON.stringify(logs);
+    await this.historyService.save(entity);
   }
 }

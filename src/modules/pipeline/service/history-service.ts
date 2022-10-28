@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import { BaseService } from '../../../basic/base-service';
 import { HistoryEntity } from '../entity/history';
 import { PipelineEntity } from '../entity/pipeline';
+import { HistoryDetail } from '../entity/vo/history-detail';
 
 /**
  * 证书申请
@@ -25,7 +26,10 @@ export class HistoryService extends BaseService<HistoryEntity> {
     }
   }
 
-  async detail(id) {}
+  async detail(historyId: string) {
+    const entity = await this.info(historyId);
+    return new HistoryDetail(entity);
+  }
 
   async start(pipeline: PipelineEntity) {
     const bean = {
@@ -34,6 +38,7 @@ export class HistoryService extends BaseService<HistoryEntity> {
       title: pipeline.title,
       status: 'start',
     };
-    await this.add(bean);
+    const { id } = await this.add(bean);
+    return id;
   }
 }

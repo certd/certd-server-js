@@ -17,7 +17,7 @@ import { DnsProviderTypeEnum } from '../../certd/enums/dns-provider-type-enum';
  * 授权
  */
 @Provide()
-@Controller('/api/certd/access')
+@Controller('/api/pi/access')
 export class AccessController extends CrudController {
   @Inject()
   service: AccessService;

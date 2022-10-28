@@ -8,21 +8,20 @@ export class HistoryEntity {
   @Column({ name: 'user_id', comment: '用户id' })
   userId: number;
 
-  @Column({ name: 'title', comment: '标题' })
-  title: number;
-
   @Column({ name: 'pipeline_id', comment: '流水线' })
   pipelineId: number;
+  @Column({ comment: '运行结果', length: 40960, nullable: true })
+  results: string;
+  @Column({ comment: '运行日志', length: 40960, nullable: true })
+  logs: string;
 
-  @Column({ comment: '历史内容', length: 40960, nullable: true })
-  content: string;
-
-  @Column({ comment: '状态', length: 100, nullable: true })
+  @Column({ comment: '历史状态', length: 20, nullable: true })
   status: string;
 
   @Column({
     name: 'end_time',
     comment: '结束时间',
+    nullable: true,
   })
   endTime: Date;
 

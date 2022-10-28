@@ -35,6 +35,17 @@ export class HistoryController extends CrudController {
     return super.page(body);
   }
 
+  @Post('/list')
+  async list(@Body(ALL) body) {
+    body.userId = this.ctx.user.id;
+    const listRet = await this.getService().list(
+      body,
+      { prop: 'id', asc: false },
+      null
+    );
+    return this.ok(listRet);
+  }
+
   @Post('/add')
   async add(@Body(ALL) bean: PipelineEntity) {
     bean.userId = this.ctx.user.id;

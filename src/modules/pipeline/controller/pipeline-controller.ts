@@ -68,7 +68,7 @@ export class PipelineController extends CrudController {
   @Post('/trigger')
   async trigger(@Query('id') id) {
     await this.service.checkUserId(id, this.ctx.user.id);
-    await this.service.run(id);
+    await this.service.trigger(id);
     return this.ok({});
   }
 }
