@@ -5,8 +5,11 @@ import { BaseService } from '../../../basic/base-service';
 import { PipelineEntity } from '../entity/pipeline';
 import { PipelineDetail } from '../entity/vo/pipeline-detail';
 import { Executor, RunHistory } from '@certd/pipeline/src';
-import { FileStorage } from '@certd/pipeline/src/core/storage';
-import { AccessService } from '../../certd/service/access-service';
+import { AccessService } from './access-service';
+import { DbStorage } from './db-storage';
+import { StorageService } from './storage-service';
+import { Cron } from '../../../plugins/cron/cron';
+import { HistoryService } from './history-service';
 
 /**
  * 证书申请
@@ -18,6 +21,13 @@ export class PipelineService extends BaseService<PipelineEntity> {
 
   @Inject()
   accessService: AccessService;
+  @Inject()
+  storageService: StorageService;
+  @Inject()
+  historyService: HistoryService;
+
+  @Inject()
+  cron: Cron;
 
   getRepository() {
     return this.repository;
@@ -38,6 +48,14 @@ export class PipelineService extends BaseService<PipelineEntity> {
     await this.addOrUpdate(bean);
   }
 
+  async trigger(id) {
+    this.cron.register({
+      name: `pipeline.${id}.trigger.once`,
+      cron: null,
+      async job() {},
+    });
+  }
+
   async run(id) {
     const entity: PipelineEntity = await this.info(id);
     const pipeline = JSON.parse(entity.content);
@@ -45,14 +63,17 @@ export class PipelineService extends BaseService<PipelineEntity> {
       console.log('changed:');
     }
 
+    const userId = entity.userId;
+    const historyId = this.historyService.start(entity);
+
     const executor = new Executor({
-      userId: entity.userId,
+      userId,
       pipeline,
       onChanged,
       accessService: this.accessService,
-      storage: new FileStorage(),
+      storage: new DbStorage(userId, this.storageService),
     });
-    await executor.run();
-    return executor.runtime;
+
+    await executor.run(historyId);
   }
 }

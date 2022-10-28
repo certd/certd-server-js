@@ -1,5 +1,6 @@
 import { PipelineEntity } from '../pipeline';
 import { HistoryEntity } from '../history';
+import { HistoryLogEntity } from '../history-log';
 
 export class PipelineDetail {
   pipeline: PipelineEntity;
@@ -8,4 +9,5 @@ export class PipelineDetail {
   }
 
   last: HistoryEntity;
+  logs: HistoryLogEntity[];
 }

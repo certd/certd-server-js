@@ -7,16 +7,16 @@ import {
   Query,
 } from '@midwayjs/decorator';
 import { BaseController } from '../../../basic/base-controller';
-import { PluginService } from '../service/plugin-service';
+import { DnsProviderService } from '../service/dns-provider-service';
 
 /**
  * 插件
  */
 @Provide()
-@Controller('/api/pi/plugin')
-export class PluginController extends BaseController {
+@Controller('/api/pi/dnsProvider')
+export class DnsProviderController extends BaseController {
   @Inject()
-  service: PluginService;
+  service: DnsProviderService;
 
   @Post('/list')
   async list(@Query(ALL) query) {

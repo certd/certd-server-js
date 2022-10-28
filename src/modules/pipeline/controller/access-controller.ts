@@ -9,10 +9,10 @@ import {
 } from '@midwayjs/decorator';
 import { CrudController } from '../../../basic/crud-controller';
 import { AccessService } from '../service/access-service';
-import { AccessProviderService } from '../core/service/access-provider-service';
+import { AccessProviderService } from '../../certd/core/service/access-provider-service';
 import * as _ from 'lodash';
 import { AccessTypeEnum } from '../enums/access-type-enum';
-import { DnsProviderTypeEnum } from '../enums/dns-provider-type-enum';
+import { DnsProviderTypeEnum } from '../../certd/enums/dns-provider-type-enum';
 /**
  * 授权
  */

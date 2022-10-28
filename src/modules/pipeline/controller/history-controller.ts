@@ -8,17 +8,22 @@ import {
   Query,
 } from '@midwayjs/decorator';
 import { CrudController } from '../../../basic/crud-controller';
-import { PipelineService } from '../service/pipeline-service';
 import { PipelineEntity } from '../entity/pipeline';
+import { HistoryService } from '../service/history-service';
+import { HistoryLogService } from '../service/history-log-service';
+import { HistoryEntity } from '../entity/history';
+import { HistoryLogEntity } from '../entity/history-log';
 
 /**
  * 证书
  */
 @Provide()
-@Controller('/api/pi/pipeline')
-export class PipelineController extends CrudController {
+@Controller('/api/pi/history')
+export class HistoryController extends CrudController {
   @Inject()
-  service: PipelineService;
+  service: HistoryService;
+  @Inject()
+  logService: HistoryLogService;
 
   getService() {
     return this.service;
@@ -43,12 +48,22 @@ export class PipelineController extends CrudController {
   }
 
   @Post('/save')
-  async save(@Body(ALL) bean: PipelineEntity) {
+  async save(@Body(ALL) bean: HistoryEntity) {
     bean.userId = this.ctx.user.id;
     if (bean.id > 0) {
       await this.service.checkUserId(bean.id, this.ctx.user.id);
     }
     await this.service.save(bean);
+    return this.ok(bean.id);
+  }
+
+  @Post('/saveLog')
+  async saveLog(@Body(ALL) bean: HistoryLogEntity) {
+    bean.userId = this.ctx.user.id;
+    if (bean.id > 0) {
+      await this.service.checkUserId(bean.id, this.ctx.user.id);
+    }
+    await this.logService.save(bean);
     return this.ok(bean.id);
   }
 
@@ -63,12 +78,5 @@ export class PipelineController extends CrudController {
     await this.service.checkUserId(id, this.ctx.user.id);
     const detail = await this.service.detail(id);
     return this.ok(detail);
-  }
-
-  @Post('/trigger')
-  async trigger(@Query('id') id) {
-    await this.service.checkUserId(id, this.ctx.user.id);
-    await this.service.run(id);
-    return this.ok({});
   }
 }

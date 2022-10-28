@@ -10,6 +10,7 @@ export default {
   koa: {
     port: 7001,
   },
+  cron: {},
   /**
    * 演示环境
    */
