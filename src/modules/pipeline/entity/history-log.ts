@@ -23,7 +23,7 @@ export class HistoryLogEntity {
   nodeId: string;
 
   @Column({ comment: '日志内容', length: 40960, nullable: true })
-  content: string;
+  logs: string;
 
   @Column({
     name: 'create_time',

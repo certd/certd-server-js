@@ -88,6 +88,7 @@ export class PipelineService extends BaseService<PipelineEntity> {
   private async saveHistory(history: RunHistory) {
     const entity: HistoryEntity = new HistoryEntity();
     entity.id = parseInt(history.id);
+    entity.userId = history.pipeline.userId;
     entity.pipeline = JSON.stringify(history.pipeline);
     await this.historyService.save(entity);
 
@@ -96,7 +97,7 @@ export class PipelineService extends BaseService<PipelineEntity> {
     logEntity.userId = entity.userId;
     logEntity.pipelineId = entity.pipelineId;
     logEntity.historyId = entity.id;
-    logEntity.content = JSON.stringify(history.logs);
-    await this.historyService.addOrUpdate(entity);
+    logEntity.logs = JSON.stringify(history.logs);
+    await this.historyLogService.addOrUpdate(logEntity);
   }
 }
