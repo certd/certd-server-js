@@ -9,6 +9,7 @@
     "online:preview": "NODE_ENV=preview node ./bootstrap.js",
     "dev": "cross-env NODE_ENV=local midway-bin dev --ts --watchFile='../../core/pipeline/src'",
     "dev:preview": "cross-env NODE_ENV=preview midway-bin dev --ts",
+    "dev:syncdb": "cross-env NODE_ENV=syncdb midway-bin dev --ts --watchFile='../../core/pipeline/src'",
     "test": "midway-bin test --ts",
     "cov": "midway-bin cov --ts",
     "lint": "mwts check",

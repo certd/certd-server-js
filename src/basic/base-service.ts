@@ -187,10 +187,15 @@ export abstract class BaseService<T> {
   }
 
   async checkUserId(id = 0, userId, userKey = 'userId') {
-    const count = await this.getRepository().count({
-      where: { id, [userKey]: userId },
+    const res = await this.getRepository().findOne({
+      select: {
+        [userKey]: true,
+      },
+      where: {
+        id,
+      },
     });
-    if (count > 0) {
+    if (!res || res.userId === userId) {
       return;
     }
     throw new PermissionException('权限不足');

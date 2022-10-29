@@ -90,4 +90,11 @@ export class HistoryController extends CrudController {
     const detail = await this.service.detail(id);
     return this.ok(detail);
   }
+
+  @Post('/logs')
+  async logs(@Query('id') id) {
+    await this.logService.checkUserId(id, this.ctx.user.id);
+    const logInfo = await this.logService.info(id);
+    return this.ok(logInfo);
+  }
 }

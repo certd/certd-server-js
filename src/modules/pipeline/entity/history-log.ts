@@ -14,7 +14,12 @@ export class HistoryLogEntity {
   @Column({ name: 'history_id', comment: '历史id' })
   historyId: number;
 
-  @Column({ comment: '任务节点id', length: 100, nullable: true })
+  @Column({
+    name: 'node_id',
+    comment: '任务节点id',
+    length: 100,
+    nullable: true,
+  })
   nodeId: string;
 
   @Column({ comment: '日志内容', length: 40960, nullable: true })

@@ -11,6 +11,8 @@ import { StorageService } from './storage-service';
 import { Cron } from '../../../plugins/cron/cron';
 import { HistoryService } from './history-service';
 import { HistoryEntity } from '../entity/history';
+import { HistoryLogEntity } from '../entity/history-log';
+import { HistoryLogService } from './history-log-service';
 
 /**
  * 证书申请
@@ -26,6 +28,8 @@ export class PipelineService extends BaseService<PipelineEntity> {
   storageService: StorageService;
   @Inject()
   historyService: HistoryService;
+  @Inject()
+  historyLogService: HistoryLogService;
 
   @Inject()
   cron: Cron;
@@ -83,15 +87,16 @@ export class PipelineService extends BaseService<PipelineEntity> {
 
   private async saveHistory(history: RunHistory) {
     const entity: HistoryEntity = new HistoryEntity();
-    entity.id = history.id;
-    const results = {};
-    const logs = {};
-    for (const id in history.status) {
-      results[id] = history.status[id].result;
-      logs[id] = history.status[id].logs;
-    }
-    entity.results = JSON.stringify(results);
-    entity.logs = JSON.stringify(logs);
+    entity.id = parseInt(history.id);
+    entity.pipeline = JSON.stringify(history.pipeline);
     await this.historyService.save(entity);
+
+    const logEntity: HistoryLogEntity = new HistoryLogEntity();
+    logEntity.id = entity.id;
+    logEntity.userId = entity.userId;
+    logEntity.pipelineId = entity.pipelineId;
+    logEntity.historyId = entity.id;
+    logEntity.content = JSON.stringify(history.logs);
+    await this.historyService.addOrUpdate(entity);
   }
 }

@@ -10,12 +10,10 @@ export class HistoryEntity {
 
   @Column({ name: 'pipeline_id', comment: '流水线' })
   pipelineId: number;
-  @Column({ comment: '运行结果', length: 40960, nullable: true })
-  results: string;
-  @Column({ comment: '运行日志', length: 40960, nullable: true })
-  logs: string;
+  @Column({ comment: '运行状态', length: 40960, nullable: true })
+  pipeline: string;
 
-  @Column({ comment: '历史状态', length: 20, nullable: true })
+  @Column({ comment: '结果状态', length: 20, nullable: true })
   status: string;
 
   @Column({
