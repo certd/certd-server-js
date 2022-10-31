@@ -6,8 +6,8 @@ import {
   Provide,
   Query,
 } from '@midwayjs/decorator';
-import { BaseController } from '../../../basic/base-controller';
 import { DnsProviderService } from '../service/dns-provider-service';
+import { BaseController } from '../../../basic/base-controller';
 
 /**
  * 插件
@@ -23,5 +23,18 @@ export class DnsProviderController extends BaseController {
     query.userId = this.ctx.user.id;
     const list = this.service.getList();
     return this.ok(list);
+  }
+
+  @Post('/dnsProviderTypeDict')
+  async getDnsProviderTypeDict() {
+    const list = this.service.getList();
+    const dict = [];
+    for (const item of list) {
+      dict.push({
+        value: item.name,
+        label: item.title,
+      });
+    }
+    return this.ok(dict);
   }
 }

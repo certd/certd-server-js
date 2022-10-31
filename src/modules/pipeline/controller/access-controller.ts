@@ -9,10 +9,7 @@ import {
 } from '@midwayjs/decorator';
 import { CrudController } from '../../../basic/crud-controller';
 import { AccessService } from '../service/access-service';
-import { AccessProviderService } from '../../certd/core/service/access-provider-service';
-import * as _ from 'lodash';
-import { AccessTypeEnum } from '../enums/access-type-enum';
-import { DnsProviderTypeEnum } from '../../certd/enums/dns-provider-type-enum';
+
 /**
  * 授权
  */
@@ -21,9 +18,6 @@ import { DnsProviderTypeEnum } from '../../certd/enums/dns-provider-type-enum';
 export class AccessController extends CrudController {
   @Inject()
   service: AccessService;
-
-  @Inject()
-  accessProviderService: AccessProviderService;
 
   getService() {
     return this.service;
@@ -64,29 +58,23 @@ export class AccessController extends CrudController {
     await this.service.checkUserId(id, this.ctx.user.id);
     return super.delete(id);
   }
-  @Post('/providers')
-  async providers() {
-    const providers = this.accessProviderService.getAccessProviders();
-    const list = [];
-    _.forEach(providers, item => {
-      list.push(item.define);
-    });
-    return this.ok(list);
-  }
 
   @Post('/define')
   async define(@Query('type') type) {
-    const provider = this.accessProviderService.getByType(type);
-    return this.ok(provider.define());
-  }
-
-  @Post('/dnsProviderTypeDict')
-  async getDnsProviderTypeDict() {
-    return this.ok(DnsProviderTypeEnum.names());
+    const provider = this.service.getDefineByType(type);
+    return this.ok(provider);
   }
 
   @Post('/accessTypeDict')
   async getAccessTypeDict() {
-    return this.ok(AccessTypeEnum.names());
+    const list = this.service.getDefineList();
+    const dict = [];
+    for (const item of list) {
+      dict.push({
+        value: item.name,
+        label: item.title,
+      });
+    }
+    return this.ok(dict);
   }
 }

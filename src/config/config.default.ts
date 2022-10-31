@@ -35,7 +35,6 @@ export default {
         // 配置实体模型 或者 entities: '/entity',
         entities: [
           '/modules/authority/entity/*',
-          '/modules/certd/entity/*',
           '/modules/pipeline/entity/*',
           FlywayHistory,
           UserEntity,

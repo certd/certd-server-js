@@ -13,7 +13,6 @@ import { ReportMiddleware } from './middleware/report';
 import { GlobalExceptionMiddleware } from './middleware/global-exception';
 import { PreviewMiddleware } from './middleware/preview';
 import { AuthorityMiddleware } from './middleware/authority';
-import './modules/certd/plugin/install';
 import * as cron from './plugins/cron';
 @Configuration({
   imports: [koa, orm, cache, flyway, validateComp, cron],

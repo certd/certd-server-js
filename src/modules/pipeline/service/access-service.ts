@@ -5,6 +5,7 @@ import { BaseService } from '../../../basic/base-service';
 import { AccessEntity } from '../entity/access';
 import { IAccessService } from '@certd/pipeline/src/access/access-service';
 import { AbstractAccess } from '@certd/pipeline/src';
+import { accessRegistry } from '@certd/pipeline/src/access/registry';
 
 /**
  * 授权
@@ -29,5 +30,13 @@ export class AccessService
       id: entity.id,
       ...setting,
     } as AbstractAccess;
+  }
+
+  getDefineList() {
+    return accessRegistry.getDefineList();
+  }
+
+  getDefineByType(type) {
+    return accessRegistry.getDefine(type);
   }
 }
