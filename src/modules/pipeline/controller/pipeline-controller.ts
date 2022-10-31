@@ -27,7 +27,12 @@ export class PipelineController extends CrudController {
   @Post('/page')
   async page(@Body(ALL) body) {
     body.query.userId = this.ctx.user.id;
-    return super.page(body);
+    const buildQuery = qb => {
+      qb.where({
+
+      })
+    };
+    return super.page({ ...body, buildQuery });
   }
 
   @Post('/add')

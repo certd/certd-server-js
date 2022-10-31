@@ -3,6 +3,7 @@ import { ValidateException } from './exception/validation-exception';
 import * as _ from 'lodash';
 import { Context } from '@midwayjs/koa';
 import { PermissionException } from './exception/permission-exception';
+import { Repository } from 'typeorm';
 
 /**
  * 服务基类
@@ -11,7 +12,7 @@ export abstract class BaseService<T> {
   @Inject()
   ctx: Context;
 
-  abstract getRepository();
+  abstract getRepository(): Repository<T>;
 
   /**
    * 获得单个ID
@@ -22,6 +23,7 @@ export abstract class BaseService<T> {
     if (!id) {
       throw new ValidateException('id不能为空');
     }
+    // @ts-ignore
     const info = await this.getRepository().findOne({ where: { id } });
     if (info && infoIgnoreProperty) {
       for (const property of infoIgnoreProperty) {
@@ -187,14 +189,16 @@ export abstract class BaseService<T> {
   }
 
   async checkUserId(id = 0, userId, userKey = 'userId') {
+    // @ts-ignore
     const res = await this.getRepository().findOne({
-      select: {
-        [userKey]: true,
-      },
+      // @ts-ignore
+      select: { [userKey]: true },
       where: {
+        // @ts-ignore
         id,
       },
     });
+    // @ts-ignore
     if (!res || res.userId === userId) {
       return;
     }

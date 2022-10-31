@@ -1,10 +1,11 @@
-import { Provide } from '@midwayjs/decorator';
+import { Inject, Provide } from '@midwayjs/decorator';
 import { InjectEntityModel } from '@midwayjs/typeorm';
 import { Repository } from 'typeorm';
 import { BaseService } from '../../../basic/base-service';
 import { HistoryEntity } from '../entity/history';
 import { PipelineEntity } from '../entity/pipeline';
 import { HistoryDetail } from '../entity/vo/history-detail';
+import { HistoryLogService } from './history-log-service';
 
 /**
  * 证书申请
@@ -13,7 +14,8 @@ import { HistoryDetail } from '../entity/vo/history-detail';
 export class HistoryService extends BaseService<HistoryEntity> {
   @InjectEntityModel(HistoryEntity)
   repository: Repository<HistoryEntity>;
-
+  @Inject()
+  logService: HistoryLogService;
   getRepository() {
     return this.repository;
   }
@@ -28,7 +30,8 @@ export class HistoryService extends BaseService<HistoryEntity> {
 
   async detail(historyId: string) {
     const entity = await this.info(historyId);
-    return new HistoryDetail(entity);
+    const log = await this.logService.info(historyId);
+    return new HistoryDetail(entity, log);
   }
 
   async start(pipeline: PipelineEntity) {
@@ -39,6 +42,33 @@ export class HistoryService extends BaseService<HistoryEntity> {
       status: 'start',
     };
     const { id } = await this.add(bean);
+    //清除大于pipeline.keepHistoryCount的历史记录
+    this.clear(pipeline.id, pipeline.keepHistoryCount);
     return id;
+  }
+
+  private async clear(pipelineId: number, keepCount = 30) {
+    const count = await this.repository.count({
+      where: {
+        pipelineId,
+      },
+    });
+    if (count <= keepCount) {
+      return;
+    }
+    const list = await this.repository.find({
+      select: {
+        id: true,
+      },
+      where: {
+        pipelineId,
+      },
+      order: {
+        id: 'ASC',
+      },
+      skip: 0,
+      take: count - keepCount,
+    });
+    await this.repository.remove(list);
   }
 }

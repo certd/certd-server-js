@@ -30,4 +30,9 @@ export class Cron {
     const tasks = cron.getTasks() as Map<any, any>;
     tasks.delete(taskName);
   }
+
+  getList() {
+    const tasks = cron.getTasks();
+    return tasks.size;
+  }
 }

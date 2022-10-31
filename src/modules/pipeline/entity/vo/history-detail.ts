@@ -1,16 +1,12 @@
-import { Pipeline } from '@certd/pipeline/src';
 import { HistoryEntity } from '../history';
+import { HistoryLogEntity } from '../history-log';
 
 export class HistoryDetail {
-  historyId: number;
-  pipelineId: number;
-  pipeline: Pipeline;
+  history: HistoryEntity;
+  log: HistoryLogEntity;
 
-  constructor(history: HistoryEntity) {
-    this.pipelineId = history.pipelineId;
-    this.historyId = history.id;
-
-    const pipeline = JSON.parse(history.pipeline);
-    this.pipeline = pipeline;
+  constructor(history: HistoryEntity, log: HistoryLogEntity) {
+    this.history = history;
+    this.log = log;
   }
 }

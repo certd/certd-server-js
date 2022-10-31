@@ -14,25 +14,28 @@ export class PipelineEntity {
   @Column({ comment: '配置', length: 40960 })
   content: string;
 
+  @Column({
+    name: 'keep_history_count',
+    comment: '历史记录保持数量',
+    nullable: true,
+  })
+  keepHistoryCount: number;
+
   @Column({ comment: '备注', length: 100, nullable: true })
   remark: string;
 
   @Column({ comment: '状态', length: 100, nullable: true })
   status: string;
 
-  @Column({
-    name: 'last_history_id',
-    comment: '最后一次执行id',
-    nullable: true,
-  })
-  lastHistoryId: number;
+  @Column({ comment: '启用/禁用', nullable: true, default: false })
+  disabled: boolean;
 
   @Column({
-    name: 'last_success_id',
-    comment: '最后一次成功id',
+    name: 'last_history_time',
+    comment: '最后一次执行时间',
     nullable: true,
   })
-  lastSuccessId: number;
+  lastHistoryTime: number;
 
   @Column({
     name: 'create_time',
