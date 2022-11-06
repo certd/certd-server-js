@@ -3,7 +3,13 @@
   "version": "0.2.0",
   "description": "fast-server base midway",
   "private": true,
+  "midway-integration": {
+    "lifecycle": {
+      "before:package:cleanup": "npm run build"
+    }
+  },
   "scripts": {
+    "deploy": "midway-bin deploy",
     "start": "NODE_ENV=production node ./bootstrap.js",
     "online": "NODE_ENV=production node ./bootstrap.js",
     "online:preview": "NODE_ENV=preview node ./bootstrap.js",
@@ -43,7 +49,6 @@
     "dayjs": "^1.10.5",
     "glob": "^7.1.7",
     "jsonwebtoken": "^8.5.1",
-    "koa-bodyparser": "^4.3.0",
     "lodash": "^4.17.21",
     "log4js": "^6.3.0",
     "md5": "^2.3.0",
@@ -57,15 +62,17 @@
     "@midwayjs/cli": "^1.0.0",
     "@midwayjs/luckyeye": "^1.0.0",
     "@midwayjs/mock": "^3.0.0",
+    "@midwayjs/mwcc": "^0.8.0",
     "@midwayjs/orm": "^3.0.0",
     "@types/jest": "^26.0.10",
-    "@types/koa-bodyparser": "^4.3.0",
+    "@types/koa": "2.13.4",
     "@types/node": "14",
     "cross-env": "^6.0.0",
     "jest": "^26.4.0",
     "mwts": "^1.0.5",
     "ts-jest": "^26.2.0",
     "ts-node": "^10.0.0",
+    "tsconfig-paths": "^4.1.0",
     "typescript": "^4.8.4"
   },
   "engines": {

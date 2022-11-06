@@ -10,7 +10,7 @@
     "noImplicitThis": true,
     "noUnusedLocals": true,
     "stripInternal": true,
-    "skipLibCheck": false,
+    "skipLibCheck": true,
     "esModuleInterop": true,
     "pretty": true,
     "declaration": true,
