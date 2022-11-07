@@ -1,7 +1,7 @@
 import { Scope, ScopeEnum, Autoload, Init, Inject } from '@midwayjs/decorator';
 import { PipelineService } from '../service/pipeline-service';
 import { logger } from '../../../utils/logger';
-
+import '@certd/plugin-all';
 @Autoload()
 @Scope(ScopeEnum.Singleton)
 export class AutoRegisterCron {

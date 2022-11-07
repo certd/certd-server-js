@@ -1,5 +1,5 @@
 import { Provide } from '@midwayjs/decorator';
-import { pluginRegistry } from '@certd/pipeline/src';
+import { pluginRegistry } from '@certd/pipeline';
 @Provide()
 export class PluginService {
   getList() {

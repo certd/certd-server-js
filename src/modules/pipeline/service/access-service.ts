@@ -3,9 +3,11 @@ import { InjectEntityModel } from '@midwayjs/typeorm';
 import { Repository } from 'typeorm';
 import { BaseService } from '../../../basic/base-service';
 import { AccessEntity } from '../entity/access';
-import { IAccessService } from '@certd/pipeline/src/access/access-service';
-import { AbstractAccess } from '@certd/pipeline/src';
-import { accessRegistry } from '@certd/pipeline/src/access/registry';
+import {
+  AbstractAccess,
+  accessRegistry,
+  IAccessService,
+} from '@certd/pipeline';
 
 /**
  * 授权

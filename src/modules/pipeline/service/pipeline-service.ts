@@ -4,7 +4,7 @@ import { In, Repository } from 'typeorm';
 import { BaseService } from '../../../basic/base-service';
 import { PipelineEntity } from '../entity/pipeline';
 import { PipelineDetail } from '../entity/vo/pipeline-detail';
-import { Executor, Pipeline, RunHistory } from '@certd/pipeline/src';
+import { Executor, Pipeline, RunHistory } from '@certd/pipeline';
 import { AccessService } from './access-service';
 import { DbStorage } from './db-storage';
 import { StorageService } from './storage-service';

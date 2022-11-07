@@ -1,5 +1,5 @@
 import { Provide } from '@midwayjs/decorator';
-import { dnsProviderRegistry } from '@certd/pipeline/src';
+import { dnsProviderRegistry } from '@certd/pipeline';
 @Provide()
 export class DnsProviderService {
   getList() {
