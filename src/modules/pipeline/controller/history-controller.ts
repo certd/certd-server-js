@@ -38,10 +38,16 @@ export class HistoryController extends CrudController {
   @Post('/list')
   async list(@Body(ALL) body) {
     body.userId = this.ctx.user.id;
+    if (body.pipelineId == null) {
+      return this.ok([]);
+    }
+    const buildQuery = qb => {
+      qb.limit(10);
+    };
     const listRet = await this.getService().list(
       body,
       { prop: 'id', asc: false },
-      null
+      buildQuery
     );
     return this.ok(listRet);
   }

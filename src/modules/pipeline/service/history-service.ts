@@ -56,19 +56,25 @@ export class HistoryService extends BaseService<HistoryEntity> {
     if (count <= keepCount) {
       return;
     }
-    const list = await this.repository.find({
-      select: {
-        id: true,
-      },
-      where: {
-        pipelineId,
-      },
-      order: {
-        id: 'ASC',
-      },
-      skip: 0,
-      take: count - keepCount,
-    });
-    await this.repository.remove(list);
+    let shouldDeleteCount = count - keepCount;
+    const deleteCountBatch = 100;
+    while (shouldDeleteCount > 0) {
+      const list = await this.repository.find({
+        select: {
+          id: true,
+        },
+        where: {
+          pipelineId,
+        },
+        order: {
+          id: 'ASC',
+        },
+        skip: 0,
+        take: deleteCountBatch,
+      });
+      await this.repository.remove(list);
+
+      shouldDeleteCount -= deleteCountBatch;
+    }
   }
 }

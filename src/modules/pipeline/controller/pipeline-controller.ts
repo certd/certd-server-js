@@ -28,9 +28,7 @@ export class PipelineController extends CrudController {
   async page(@Body(ALL) body) {
     body.query.userId = this.ctx.user.id;
     const buildQuery = qb => {
-      qb.where({
-
-      })
+      qb.where({});
     };
     return super.page({ ...body, buildQuery });
   }
