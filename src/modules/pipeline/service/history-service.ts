@@ -1,4 +1,4 @@
-import { Inject, Provide } from '@midwayjs/decorator';
+import { Inject, Provide, Scope, ScopeEnum } from "@midwayjs/decorator";
 import { InjectEntityModel } from '@midwayjs/typeorm';
 import { Repository } from 'typeorm';
 import { BaseService } from '../../../basic/base-service';
@@ -11,6 +11,7 @@ import { HistoryLogService } from './history-log-service';
  * 证书申请
  */
 @Provide()
+@Scope(ScopeEnum.Singleton)
 export class HistoryService extends BaseService<HistoryEntity> {
   @InjectEntityModel(HistoryEntity)
   repository: Repository<HistoryEntity>;

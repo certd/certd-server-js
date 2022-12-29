@@ -1,4 +1,4 @@
-import { Provide } from '@midwayjs/decorator';
+import { Provide, Scope, ScopeEnum } from "@midwayjs/decorator";
 import { InjectEntityModel } from '@midwayjs/typeorm';
 import { Repository } from 'typeorm';
 import { BaseService } from '../../../basic/base-service';
@@ -7,6 +7,7 @@ import { StorageEntity } from '../entity/storage';
 /**
  */
 @Provide()
+@Scope(ScopeEnum.Singleton)
 export class StorageService extends BaseService<StorageEntity> {
   @InjectEntityModel(StorageEntity)
   repository: Repository<StorageEntity>;
