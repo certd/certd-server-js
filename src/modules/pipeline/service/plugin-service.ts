@@ -7,10 +7,8 @@ export class PluginService {
     const collection = pluginRegistry.storage;
     const list = [];
     for (const key in collection) {
-      const PluginClass = collection[key];
-      // @ts-ignore
-      const plugin = new PluginClass();
-      list.push({ ...plugin.define, key });
+      const Plugin = collection[key];
+      list.push({ ...Plugin.define, key });
     }
     return list;
   }
