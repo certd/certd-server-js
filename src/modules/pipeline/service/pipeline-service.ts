@@ -135,9 +135,13 @@ export class PipelineService extends BaseService<PipelineEntity> {
   }
 
   registerCron(pipelineId, trigger) {
-    const cron = trigger.props?.cron;
+    let cron = trigger.props?.cron;
     if (cron == null) {
       return;
+    }
+    if(cron.startsWith("*")){
+      cron = "0"+ cron.substring(1,cron.length)
+      return
     }
     this.cron.register({
       name: this.buildCronKey(pipelineId, trigger.id),
